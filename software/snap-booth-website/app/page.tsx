@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div>
-      <h1>Welcome to the Snap Website</h1>
+      <h1>Welcome</h1>
     </div>
-  );
+  )
 }

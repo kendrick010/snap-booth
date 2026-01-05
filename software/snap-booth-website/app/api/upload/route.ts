@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase/client'
+import generateUuidDateId from '@/utils/generateUuid'
 
 /*
  ** Only camera endpoint has permission to upload **
@@ -27,9 +28,9 @@ export async function POST(request: Request) {
     }
 
     // Supabase upload
-    const timestamp = Date.now()
-    const fileExtension = file.name.split('.').pop()
-    const fileName = `${timestamp}_${Math.random().toString(36).substring(7)}.${fileExtension}`
+    const shareableId = generateUuidDateId()
+    const fileExtension = file.name.split('.').pop() || 'jpg'
+    const fileName = `${shareableId}.${fileExtension}`
     const filePath = `photos/${fileName}`
 
     const { error: storageError } = await supabase.storage
@@ -40,6 +41,7 @@ export async function POST(request: Request) {
       })
 
     if (storageError) {
+      console.log(storageError)
       return NextResponse.json(
         { error: 'Storage upload failed' },
         { status: 500 }
@@ -56,11 +58,12 @@ export async function POST(request: Request) {
       .from('photos')
       .insert([
         {
+          shareable_id: shareableId,
           image_url: urlData.publicUrl,
           is_public: false,
         }
       ])
-      .select('id, image_url, is_public, created_at')
+      .select('*')
       .single()
 
     if (dbError) {
@@ -77,12 +80,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      photo: {
-        id: data.id,
-        image_url: data.image_url,
-        is_public: data.is_public,
-        created_at: data.created_at
-      }
+      photo: data,
     })
   }
   catch {

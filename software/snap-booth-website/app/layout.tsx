@@ -1,4 +1,10 @@
 import "./globals.css";
+import localFont from 'next/font/local'
+
+const inkFont = localFont({
+  src: './fonts/TabbeSans-DYR1m.otf',
+  display: 'swap',
+})
 
 export default function RootLayout({
   children,
@@ -7,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={inkFont.className}>
         {children}
       </body>
     </html>

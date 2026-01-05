@@ -9,7 +9,7 @@ export default function StripeGradient() {
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    const gradient = new Gradient();
+    const gradient = new Gradient() as any;
     gradient.initGradient("#gradient-canvas");
 
     const handleResize = () => gradient.resize();

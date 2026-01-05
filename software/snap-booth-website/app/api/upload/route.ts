@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
-import { supabase } from "@/lib/supabase/client";
 import generateUuidDateId from '@/utils/generateUuid'
+import { supabase } from "@/lib/supabase/client";
 
 /*
  ** Only camera endpoint has permission to upload **

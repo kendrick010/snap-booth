@@ -3,8 +3,8 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-import { supabase } from '@/lib/supabase/client'
-import StripeGradient from "@/components/StripeGradient";
+import { supabase } from "../../../lib/supabase/client";
+import StripeGradient from "../../../components/StripeGradient";
 
 type Photo = {
   id: string,

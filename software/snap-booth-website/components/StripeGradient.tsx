@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Gradient } from '../lib/gradient/gradient.js'
+import { Gradient } from '@/lib/gradient/gradient.js'
 
 export default function StripeGradient() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-import { supabase } from "@/lib/supabase/client";
+import { supabase } from "@/lib/supabase";
 import StripeGradient from "@/components/StripeGradient";
 
 type Photo = {

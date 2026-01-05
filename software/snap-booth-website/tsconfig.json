@@ -29,7 +29,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
-, "tailwind.config.js", "lib/gradient/gradient.js"  ],
+    "**/*.mts", 
+    "tailwind.config.js", 
+    "lib/gradient.js"
+  ],
   "exclude": ["node_modules"]
 }

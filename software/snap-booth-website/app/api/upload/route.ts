@@ -8,6 +8,11 @@ import { supabase } from "@/lib/supabase";
 
 export async function POST(request: Request) {
   try {
+    const secret = request.headers.get("x-device-secret")
+    if (secret !== process.env.DEVICE_UPLOAD_SECRET) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
     // POST parameters
     const formData = await request.formData()
     const file = formData.get('file')
@@ -22,7 +27,7 @@ export async function POST(request: Request) {
     const validTypes = ['image/jpeg']
     if (!validTypes.includes(file.type)) {
       return NextResponse.json(
-        { error: 'Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.' },
+        { error: 'Invalid file type. Only JPEG are allowed.' },
         { status: 400 }
       )
     }
@@ -41,7 +46,6 @@ export async function POST(request: Request) {
       })
 
     if (storageError) {
-      console.log(storageError)
       return NextResponse.json(
         { error: 'Storage upload failed' },
         { status: 500 }
@@ -67,7 +71,6 @@ export async function POST(request: Request) {
       .single()
 
     if (dbError) {
-      console.log(dbError)
       await supabase.storage
         .from('photos')
         .remove([filePath])

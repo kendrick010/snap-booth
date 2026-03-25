@@ -26,10 +26,6 @@ export default async function verifyRequest(request: Request, file: File) {
     .update(message)
     .digest("hex")
 
-  console.log("message:", message)
-  console.log("expected:", expected)
-  console.log("received:", signature)
-
   if (expected.length !== signature.length) return false
 
   return crypto.timingSafeEqual(

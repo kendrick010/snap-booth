@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import generateUuidDateId from '@/utils/generateUuid'
 import { supabase } from "@/lib/supabase";
+import verifyRequest from '@/utils/verifyRequest';
 
 /*
  ** Only camera endpoint has permission to upload **
@@ -8,11 +9,6 @@ import { supabase } from "@/lib/supabase";
 
 export async function POST(request: Request) {
   try {
-    const secret = request.headers.get("x-device-secret")
-    if (secret !== process.env.DEVICE_UPLOAD_SECRET) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
-
     // POST parameters
     const formData = await request.formData()
     const file = formData.get('file')
@@ -30,6 +26,10 @@ export async function POST(request: Request) {
         { error: 'Invalid file type. Only JPEG are allowed.' },
         { status: 400 }
       )
+    }
+
+    if (!(await verifyRequest(request, file))) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     // Supabase upload

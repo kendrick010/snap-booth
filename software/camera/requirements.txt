@@ -1,1 +1,5 @@
 python-dotenv
+opencv-python
+requests
+RPi.GPIO
+rpi-ws281x

@@ -1,14 +1,19 @@
 import os
 from dotenv import load_dotenv
 
+from devices import get_camera, get_printer
+
 load_dotenv() 
 
 # ==================== Camera config ====================
-CAMERA_INDEX = 0
+CAMERA_INDEX = get_camera()
 
 PHOTO_DIR = "captured_photos"
 PHOTO_WIDTH = 640
 PHOTO_HEIGHT = 480
+
+# ==================== Printer config ====================
+PRINTER_INDEX = get_printer()
 
 # ==================== Button config ====================
 BUTTON_PIN = 17
@@ -27,3 +32,6 @@ LED_DMA = 10                # DMA channel to use for generating signal
 LED_BRIGHTNESS = 64         # Set to 0 for darkest and 255 for brightest
 LED_INVERT = False          # True to invert the signal
 LED_CHANNEL = 0             # Set to 1 for GPIOs 13, 19, 41, 45 or 53
+
+print(CAMERA_INDEX)
+print(PRINTER_INDEX)
